@@ -1,11 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import WeatherCard from './WeatherCard'
 import './popup.css'
+import 'fontsource-roboto'
 
 const App: React.FC<{}> = () => {
   return (
     <div>
-      <img src="icon.png" />
+      <WeatherCard city="London" />
+      <WeatherCard city="Warsaw" />
+      <WeatherCard city="Error" />
     </div>
   )
 }
