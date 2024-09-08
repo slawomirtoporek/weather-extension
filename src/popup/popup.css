@@ -1,10 +1,14 @@
 body {
   background-color: #f5f5f5;
-  width: 340px;
+  width: 400px;
   height: 512px;
   font-family: 'Roboto';
 }
 
 .scaleBtn {
   width: 46px;
+}
+
+.overlayBtn {
+  height: 60px;
 }

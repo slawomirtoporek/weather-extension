@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import WeatherCard from './WeatherCard'
+import WeatherCard from '../components/WeatherCard'
 import {
   setStoredCities,
   setStoredOptions,
@@ -9,7 +9,8 @@ import {
   LocalStorageOptions,
 } from '../utils/storage'
 import { InputBase, IconButton, Paper, Box, Grid } from '@material-ui/core'
-import { Add } from '@material-ui/icons'
+import { Add, PictureInPicture } from '@material-ui/icons'
+import { Message } from '../utils/messages'
 import './popup.css'
 import 'fontsource-roboto'
 
@@ -53,6 +54,26 @@ const App: React.FC<{}> = () => {
     })
   }
 
+  const handleOverlayButtonClick = () => {
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        if (tabs.length > 0) {
+          chrome.tabs.sendMessage(tabs[0].id, Message.TOGGLE_OVERLAY)
+        }
+      }
+    )
+    // const updateOptions: LocalStorageOptions = {
+    //   ...options,
+    //   hasAutoOverlay: options.hasAutoOverlay === true ? false : true,
+    // }
+    // setStoredOptions(updateOptions).then(() => {
+    //   setOptions(updateOptions)
+    // })
+  }
+
   if (!options) {
     return null
   }
@@ -79,7 +100,7 @@ const App: React.FC<{}> = () => {
             <Paper>
               <Box sx={{ py: '4px' }}>
                 <IconButton
-                  className="scaleBtn "
+                  className="scaleBtn"
                   onClick={handleTempScaleButtonClick}
                 >
                   {options.tempScale === 'metric' ? '\u2103' : '\u2109'}
@@ -87,10 +108,21 @@ const App: React.FC<{}> = () => {
               </Box>
             </Paper>
           </Grid>
+          <Grid item>
+            <Paper>
+              <Box>
+                <IconButton
+                  className="overlayBtn"
+                  onClick={handleOverlayButtonClick}
+                >
+                  <PictureInPicture />
+                </IconButton>
+              </Box>
+            </Paper>
+          </Grid>
         </Grid>
       </Box>
-      {
-        options.homeCity != '' && (
+      {options.homeCity != '' && (
         <WeatherCard city={options.homeCity} tempScale={options.tempScale} />
       )}
       {cities.map((city, index) => (
