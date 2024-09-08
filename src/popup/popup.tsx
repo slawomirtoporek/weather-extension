@@ -65,13 +65,6 @@ const App: React.FC<{}> = () => {
         }
       }
     )
-    // const updateOptions: LocalStorageOptions = {
-    //   ...options,
-    //   hasAutoOverlay: options.hasAutoOverlay === true ? false : true,
-    // }
-    // setStoredOptions(updateOptions).then(() => {
-    //   setOptions(updateOptions)
-    // })
   }
 
   if (!options) {
